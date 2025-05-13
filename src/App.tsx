@@ -9,23 +9,19 @@ export class App extends React.Component<{}, AppState> {
     pressedKey: null,
   };
 
-  handleKeyUp = (event: KeyboardEvent) => {
+  handleKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
     this.setState({ pressedKey: event.key });
   };
-
-  componentDidMount() {
-    document.addEventListener('keyup', this.handleKeyUp);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keyup', this.handleKeyUp);
-  }
 
   render() {
     const { pressedKey } = this.state;
 
     return (
-      <div className="App">
+      <div
+        className="App"
+        tabIndex={0} // importante para div poder receber foco e capturar key events
+        onKeyUp={this.handleKeyUp}
+      >
         <p className="App__message">
           {pressedKey
             ? `The last pressed key is [${pressedKey}]`
